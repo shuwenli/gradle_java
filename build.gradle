@@ -4,6 +4,7 @@ repositories {
 
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'jacoco'
 
 mainClassName = 'hello.HelloWorld'
 
@@ -12,9 +13,24 @@ targetCompatibility = 1.7
 
 dependencies {
     compile "joda-time:joda-time:2.2"
+    testCompile 'junit:junit:4.12'
 }
 
 jar {
     baseName = 'gs-gradle'
     version =  '0.1.0'
 }
+
+jacoco {
+    toolVersion = "0.7.6.201602180812"
+    reportsDir = file("$buildDir/customJacocoReportDir")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination "${buildDir}/jacocoHtml"
+    }
+}
+
